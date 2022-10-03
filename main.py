@@ -22,6 +22,9 @@ from vmanage_credentials import *
 import requests, uuid, json
 
 if __name__ == '__main__':
+
+    # Starting JSON definition for application in vManage
+
     ms21vianet_urls = {
       "appName": "O365-21V-URL",
       "serverNames": []
@@ -36,23 +39,26 @@ if __name__ == '__main__':
         }
       ]
     }
+
+    # Read Microsoft JSON definition. Add URLs and IP's to appropriate app definition
+
     my_uuid = str(uuid.uuid4())
     vianet = json.loads(requests.get(f'https://endpoints.office.com/endpoints/China?clientrequestid={my_uuid}').text)
     for net in vianet:
         if 'urls' in net.keys():
-            # print(f'21vianet_{net["id"]}_{net["serviceArea"]}: {net["urls"]}')
             for url in net['urls']:
                 if url not in ms21vianet_urls['serverNames']:
                     ms21vianet_urls['serverNames'].append(url)
         else:
-            # print(f'21vianet_{net["id"]}_{net["serviceArea"]}: {net["ips"]}')
             for ip_address in net['ips']:
                 if ':' in ip_address:
-                    continue
                     # print(f'IPv6 Address Ignored: {ip_address}')
+                    continue
                 else:
                     if ip_address not in ms21vianet_ips:
                         ms21vianet_ips['L3L4'][0]['ipAddresses'].append(ip_address)
+
+    # Log into vManage, pull current app list, and either update existing apps or create new ones
 
     ms21vianet_urls_id = ms21vianet_ips_id = None
     vmanage = rest_api_lib(vmanage_ip, vmanage_user, vmanage_password)

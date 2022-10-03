@@ -5,3 +5,13 @@ Execution results in two custom applications; one for URLs and one for subnets.
 The script reads from the JSON file linked in this Microsoft tech article:
 
 https://learn.microsoft.com/en-us/microsoft-365/enterprise/urls-and-ip-address-ranges-21vianet?view=o365-worldwide
+
+## Use Instructions
+
+> git clone https://github.com/dbrown92700/21vianetO365feed
+
+> pip install -r requirements
+
+Add valid address and credentials to vmanage_credentials.py 
+
+> python3 main.py 

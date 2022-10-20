@@ -15,6 +15,6 @@ https://learn.microsoft.com/en-us/microsoft-365/enterprise/urls-and-ip-address-r
 
 > pip install -r requirements
 
-Add valid address and credentials to vmanage_credentials.py 
+Edit **vmanage_credentials.py** to add valid vmanage address and credentials 
 
 > python3 main.py
